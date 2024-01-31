@@ -1,0 +1,23 @@
+﻿@model List<Test_1.Models.Stages>
+<!-- Таблица для отображения этапов -->
+
+<h2>Stages List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Stage Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var stage in Model)
+        {
+            <tr>
+                <td>@stage.StageName</td>
+                <td>@stage.StartDate</td>
+                <td>@stage.EndDate</td>
+            </tr>
+        }
+    </tbody>
+</table>

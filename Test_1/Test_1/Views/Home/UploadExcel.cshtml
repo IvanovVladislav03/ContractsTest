@@ -1,0 +1,81 @@
+﻿@model List<Test_1.Models.Contract>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="row">
+        <label>Select File</label>
+        <input type="file" name="file" />
+    </div>
+    <br />
+    <div class="row">
+        <input type="submit" asp-controller="Home" asp-action="UploadExcel" class="btn btn-dark" value="Upload Excel File" />
+    </div>
+    <div class="row">
+        <button type="button" id="btnGetContractsJson" class="btn btn-primary">Get Contracts JSON</button>
+    </div>
+
+    <div id="contractsListContainer"></div>
+
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#btnGetContractsJson").click(function () {
+            $.ajax({
+                url: '/Home/GetContractsJson',
+                type: 'GET',
+                success: function (html) {
+                    $("#contractsListContainer").html(html);
+                },
+                error: function () {
+                    alert('Error occurred while getting Contracts JSON.');
+                }
+            });
+        });
+    });
+</script>
+
+<!-- Выбора договора -->
+    <div class="row">
+        <label>Enter Contract Code</label>
+        <input type="text" id="contractCodeInput" class="form-control" />
+    </div>
+<br />
+
+<!-- Кнопка для получения этапов -->
+<div class="row">
+    <button type="button" id="btnGetStages" class="btn btn-info">Get Stages</button>
+</div>
+
+<!-- Контейнер для отображения этапов -->
+<div id="stagesListContainer"></div>
+
+<script>
+    $(document).ready(function () {
+        // Обработка нажатия кнопки "Get Stages"
+        $("#btnGetStages").click(function () {
+            var contractCode = $("#contractCodeInput").val();
+
+            // Проверка, что введен номер договора
+            if (contractCode) {
+                // Выполнить AJAX-запрос для получения этапов по введенному номеру договора
+                $.ajax({
+                    url: '/Home/GetStagesByContractCode',
+                    type: 'GET',
+                    data: { contractCode: contractCode },
+                    success: function (data) {
+                        // Обновление контейнера с этапами
+                        $("#stagesListContainer").html(data);
+                    },
+                    error: function () {
+                        alert('Error occurred while getting Stages.');
+                    }
+                });
+            } else {
+                alert('Please enter a contract code.');
+            }
+        });
+    });
+</script>
+

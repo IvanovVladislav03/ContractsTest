@@ -1,0 +1,32 @@
+﻿@model List<Test_1.Models.Contract>
+
+<h2>Contracts List</h2>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ContractId</th>
+                <th>Contract Code</th>
+                <th>Contract Name</th>
+                <th>Customer</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var contract in Model)
+            {
+            <tr>
+                <td>@contract.ContractId</td>
+                <td>@contract.ContractCode</td>
+                <td>@contract.ContractName</td>
+                <td>@contract.Customer</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No contracts found.</p>
+}
